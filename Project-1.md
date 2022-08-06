@@ -146,9 +146,7 @@ sudo systemctl reload apache2
 The new website is now active, but the web root /var/www/projectlamp is still empty. Create an index.html file in that location so that we can test that the virtual host works as expected:
 ```
 sudo echo 'Hello LAMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlamp/index.html
-
-![Apache Virtual host lauching with Public IP address](https://user-images.githubusercontent.com/107906178/183228154-72d0bc06-9b7b-4224-91a0-a34facd59b50.jpg)
-  
+```
 - Now go to the browser and try to open your website URL using IP address
  ```
   http://<Public-IP-Address>
@@ -158,6 +156,8 @@ You can also access your website in your browser by public DNS name, not only by
   ```
   http://<Public-DNS-Name>
   ```
+  ![Apache Virtual host lauching with DNS name](https://user-images.githubusercontent.com/107906178/183228155-70045424-5443-4942-b0eb-7649b74a99f7.jpg)
+  
 - Leave this file in place as a temporary landing page for your application until you set up an index.php file to replace it. Once you do that, remember to remove or rename the index.html file from your document root, as it would take precedence over an index.php file by default.
   
   5. STEP 5 : ENABLE PHP ON THE WEBSITE
@@ -179,33 +179,19 @@ In case you want to change this behavior, you’ll need to edit the /etc/apache2
   sudo systemctl reload apache2
   ```
  - Create a PHP script to test that PHP is correctly installed and configured on your server.
-  
+  Create a new file named index.php inside your custom web root folder:
+  ```
+  vim /var/www/projectlamp/index.php
+  ```
+  This will open a blank file. Add the following text, which is valid PHP code, inside the file:
+  ```
+  <?php
+phpinfo();
+```
+When you are finished, save and close the file, refresh the page.
+![PHP installation complete](https://user-images.githubusercontent.com/107906178/183228156-5f3ef9ed-1c03-4672-b818-50649ad4abf6.JPG)
 
-1. **` sudo apt update`**
-
-![sudo apt update](./images/sudo%20apt%20update.jpg)
-
-2. **` sudo systemctl status apache2`**
-
-![sudo systemctl status apache2](./images/sudo%20systemctl%20status%20apache2.jpg)
-
-
-  
-![php - v](./images/php%20-%20v.JPG)
-
-9. **`sudo vi `**
-
-![sudo vi ](./images/sudo%20vi%20.jpg)
-
-10. **`http://<Public-IP-Address>:80`**
-
-![alt](./Images/Apache%20Virtual%20host%20lauching%20with%20Public%20IP%20address.jpg)
-
-11. **`http://<Public-DNS-Name>:80`**
-
-![alt](./images/Apache%20Virtual%20host%20lauching%20with%20DNS%20name.jpg)
-
-12. **`vim /var/www/projectlamp/index.php`**
-
-![alt](./images/PHP%20installation%20complete.JPG)
-
+After checking the relevant information about your PHP server through that page, it’s best to remove the file you created as it contains sensitive information about your PHP environment -and your Ubuntu server. You can use rm to do so:
+```
+sudo rm /var/www/projectlamp/index.php
+```
