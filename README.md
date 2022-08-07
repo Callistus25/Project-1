@@ -1,3 +1,5 @@
 # LAMP Stack Implementation
-I was able to follow through the steps and acheived the desired result successfully. Great Project.
+
+Update 1:
+I was able to follow through and acheived the desired result successfully. Great Project.
 
